@@ -7,7 +7,7 @@
                 <div class="form-group">
                     <label for="name" style="font-weight: bold;">Name</label>
                     <input type="text" class="form-control" id="name" formControlName="name"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['id'].errors}" />
+                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['name'].errors}" />
 
                     <div *ngIf="submitted && machineFleetForm.controls['name'].errors" class="text-danger">
                         <div *ngIf="submitted && machineFleetForm.controls['name'].errors['required']">
@@ -38,20 +38,38 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="performanceLog" style="font-weight: bold;">Performance Log</label>
+                    <input id="performanceLog" class="form-control" formControlName="performanceLog" type="text"
+                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['performanceLog'].errors}" />
 
-                <div formArrayName="performanceLog">
-                    <label>Performance Log:</label>
-                    <!-- Add logic to dynamically add/remove items -->
+                    <div *ngIf="submitted && machineFleetForm.controls['performanceLog'].errors" class="text-danger">
+                        <div *ngIf="submitted && machineFleetForm.controls['performanceLog'].errors['required']">
+                            [Performance Log] is required !
+                        </div>
+                    </div>
                 </div>
+                <div class="form-group">
+                    <label for="error" style="font-weight: bold;">Error</label>
+                    <input id="error" class="form-control" formControlName="error" type="text"
+                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['error'].errors}" />
 
-                <div formArrayName="errors">
-                    <label>Errors:</label>
-                    <!-- Add logic to dynamically add/remove items -->
+                    <div *ngIf="submitted && machineFleetForm.controls['error'].errors" class="text-danger">
+                        <div *ngIf="submitted && machineFleetForm.controls['error'].errors['required']">
+                            [Error] is required !
+                        </div>
+                    </div>
                 </div>
+                <div class="form-group">
+                    <label for="errorLog" style="font-weight: bold;">Error Log</label>
+                    <input id="errorLog" class="form-control" formControlName="errorLog" type="text"
+                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['errorLog'].errors}" />
 
-                <div formArrayName="errorHistory">
-                    <label>Error History:</label>
-                    <!-- Add logic to dynamically add/remove items -->
+                    <div *ngIf="submitted && machineFleetForm.controls['errorLog'].errors" class="text-danger">
+                        <div *ngIf="submitted && machineFleetForm.controls['errorLog'].errors['required']">
+                            [Error Log] is required !
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -72,9 +90,10 @@
                     <div class="form-group">
                         <label for="currentProduct" style="font-weight: bold;">Current Product</label>
                         <input id="currentProduct" class="form-control" formControlName="currentProduct" type="text"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['currentProduct'].errors}" />
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['currentProduct'].errors}" />
 
-                        <div *ngIf="submitted && machineFleetForm.controls['currentProduct'].errors" class="text-danger">
+                        <div *ngIf="submitted && machineFleetForm.controls['currentProduct'].errors"
+                            class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['currentProduct'].errors['required']">
                                 [Current Product] is required !
                             </div>
@@ -84,7 +103,7 @@
                     <div class="form-group">
                         <label for="partsInBatch" style="font-weight: bold;">Parts in Batch</label>
                         <input id="partsInBatch" class="form-control" formControlName="partsInBatch" type="number"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['partsInBatch'].errors}" />
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['partsInBatch'].errors}" />
                         <div *ngIf="submitted && machineFleetForm.controls['partsInBatch'].errors" class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['partsInBatch'].errors['required']">
                                 [Parts in Batch] is required !
@@ -95,8 +114,9 @@
                     <div class="form-group">
                         <label for="partsCompleted" style="font-weight: bold;">Parts Completed</label>
                         <input id="partsCompleted" class="form-control" formControlName="partsCompleted" type="number"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['partsCompleted'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['partsCompleted'].errors" class="text-danger">
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['partsCompleted'].errors}" />
+                        <div *ngIf="submitted && machineFleetForm.controls['partsCompleted'].errors"
+                            class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['partsCompleted'].errors['required']">
                                 [Parts Completed] is required !
                             </div>
@@ -105,9 +125,11 @@
 
                     <div class="form-group">
                         <label for="batchStartTime" style="font-weight: bold;">Batch Start Time</label>
-                        <input id="batchStartTime" class="form-control" formControlName="batchStartTime" type="datetime-local"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['batchStartTime'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['batchStartTime'].errors" class="text-danger">
+                        <input id="batchStartTime" class="form-control" formControlName="batchStartTime"
+                            type="datetime-local"
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['batchStartTime'].errors}" />
+                        <div *ngIf="submitted && machineFleetForm.controls['batchStartTime'].errors"
+                            class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['batchStartTime'].errors['required']">
                                 [Batch Start Time] is required !
                             </div>
@@ -120,7 +142,7 @@
                     <div class="form-group">
                         <label for="manufacturer" style="font-weight: bold;">Manufacturer</label>
                         <input id="manufacturer" class="form-control" formControlName="manufacturer" type="text"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['manufacturer'].errors}" />
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['manufacturer'].errors}" />
                         <div *ngIf="submitted && machineFleetForm.controls['manufacturer'].errors" class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['manufacturer'].errors['required']">
                                 [Manufacturer] is required !
@@ -131,7 +153,7 @@
                     <div class="form-group">
                         <label for="modelNumber" style="font-weight: bold;">Model Number</label>
                         <input id="modelNumber" class="form-control" formControlName="modelNumber" type="text"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['modelNumber'].errors}" />
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['modelNumber'].errors}" />
                         <div *ngIf="submitted && machineFleetForm.controls['modelNumber'].errors" class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['modelNumber'].errors['required']">
                                 [Model Number] is required !
@@ -142,8 +164,9 @@
                     <div class="form-group">
                         <label for="lastMaintenance" style="font-weight: bold;">Last Maintenance</label>
                         <input id="lastMaintenance" class="form-control" formControlName="lastMaintenance" type="date"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['lastMaintenance'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['lastMaintenance'].errors" class="text-danger">
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['lastMaintenance'].errors}" />
+                        <div *ngIf="submitted && machineFleetForm.controls['lastMaintenance'].errors"
+                            class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['lastMaintenance'].errors['required']">
                                 [Last Maintenance] is required !
                             </div>
@@ -153,7 +176,7 @@
                     <div class="form-group">
                         <label for="location" style="font-weight: bold;">Location</label>
                         <input id="location" class="form-control" formControlName="location" type="text"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['location'].errors}" />
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['location'].errors}" />
                         <div *ngIf="submitted && machineFleetForm.controls['location'].errors" class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['location'].errors['required']">
                                 [Location] is required !
@@ -167,7 +190,7 @@
                     <div class="form-group">
                         <label for="temperatureC" style="font-weight: bold;">Temperature (°C)</label>
                         <input id="temperatureC" class="form-control" formControlName="temperatureC" type="number"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['temperatureC'].errors}" />
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['temperatureC'].errors}" />
                         <div *ngIf="submitted && machineFleetForm.controls['temperatureC'].errors" class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['temperatureC'].errors['required']">
                                 [Temperature] is required !
@@ -178,8 +201,9 @@
                     <div class="form-group">
                         <label for="vibrationLevel" style="font-weight: bold;">Vibration Level</label>
                         <input id="vibrationLevel" class="form-control" formControlName="vibrationLevel" type="number"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['vibrationLevel'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['vibrationLevel'].errors" class="text-danger">
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['vibrationLevel'].errors}" />
+                        <div *ngIf="submitted && machineFleetForm.controls['vibrationLevel'].errors"
+                            class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['vibrationLevel'].errors['required']">
                                 [Vibration Level] is required !
                             </div>
@@ -188,10 +212,13 @@
 
                     <div class="form-group">
                         <label for="powerConsumptionKw" style="font-weight: bold;">Power Consumption (kW)</label>
-                        <input id="powerConsumptionKw" class="form-control" formControlName="powerConsumptionKw" type="number"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['powerConsumptionKw'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['powerConsumptionKw'].errors" class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['powerConsumptionKw'].errors['required']">
+                        <input id="powerConsumptionKw" class="form-control" formControlName="powerConsumptionKw"
+                            type="number"
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['powerConsumptionKw'].errors}" />
+                        <div *ngIf="submitted && machineFleetForm.controls['powerConsumptionKw'].errors"
+                            class="text-danger">
+                            <div
+                                *ngIf="submitted && machineFleetForm.controls['powerConsumptionKw'].errors['required']">
                                 [Power Consumption] is required !
                             </div>
                         </div>
@@ -203,7 +230,7 @@
                     <div class="form-group">
                         <label for="operatorName" style="font-weight: bold;">Operator Name</label>
                         <input id="operatorName" class="form-control" formControlName="operatorName" type="text"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['operatorName'].errors}"/>
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['operatorName'].errors}" />
                         <div *ngIf="submitted && machineFleetForm.controls['operatorName'].errors" class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['operatorName'].errors['required']">
                                 [Operator Name] is required !
@@ -214,7 +241,7 @@
                     <div class="form-group">
                         <label for="shift" style="font-weight: bold;">Shift</label>
                         <input id="shift" class="form-control" formControlName="shift" type="text"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['shift'].errors}" />
+                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['shift'].errors}" />
                         <div *ngIf="submitted && machineFleetForm.controls['shift'].errors" class="text-danger">
                             <div *ngIf="submitted && machineFleetForm.controls['shift'].errors['required']">
                                 [Shift] is required !
@@ -262,7 +289,7 @@
                         <td>{{ machine.producedParts }}</td>
                         <td>
                             <div>
-                                <div style="float: left;">
+                                <div style="float: left; margin-right: 10px;">
                                     <button (click)="onUpdateMachine(machine)"
                                         class="text-dark btn btn-sm btn-outline-warning">Update</button>
                                 </div>

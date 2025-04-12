@@ -132,6 +132,7 @@ export class MachineFleetComponent implements OnInit {
             console.log(response);
             this.toastr.success('Machine deleted successfully');
             this.getAllMachines();
+            this.onCloseForm();
           },
           (error) => {
             console.error(error);

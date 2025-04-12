@@ -11,13 +11,15 @@ import { MaterialModule } from './shared/material/material.module';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MachineFleetComponent,
-    HomeComponent
+    HomeComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

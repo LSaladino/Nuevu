@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { DialogService } from 'src/app/services/dialog.service';
 import { ServiceMachineFleetService } from 'src/app/services/service-machine-fleet.service';
 
 
@@ -17,7 +18,8 @@ export class MachineFleetComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private serviceMachineFleet: ServiceMachineFleetService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dialogServise: DialogService,
 
   ) {
 
@@ -118,17 +120,26 @@ export class MachineFleetComponent implements OnInit {
   }
 
   onDeleteMachine(machine: any) {
-    this.serviceMachineFleet.deleteMachine(machine.id).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.toastr.success('Machine deleted successfully');
-        this.getAllMachines();
-      },
-      error: (error) => {
-        console.error(error);
-        this.toastr.error('Error deleting machine');
+    this.dialogServise.confirmDialog({
+      title: 'Confirmation',
+      message: 'Are you sure you want to delete this machine? GUID: ' + machine.id,
+      confirmText: 'Delete',
+      cancelText: 'Cancel'
+    }).subscribe((result) => {
+      if (result) {
+        this.serviceMachineFleet.deleteMachine(machine.id).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.success('Machine deleted successfully');
+            this.getAllMachines();
+          },
+          (error) => {
+            console.error(error);
+            this.toastr.error('Error deleting machine');
+          }
+        );
       }
-    })
+    });
   }
 
   onUpdateMachine(machine: any) {

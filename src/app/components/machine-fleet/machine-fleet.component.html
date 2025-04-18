@@ -4,253 +4,154 @@
     <div class="row">
         <div class="col-sm-3" *ngIf="oSelectedMachine">
             <form [formGroup]="machineFleetForm" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                    <label for="name" style="font-weight: bold;">Name</label>
-                    <input type="text" class="form-control" id="name" formControlName="name"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['name'].errors}" />
 
-                    <div *ngIf="submitted && machineFleetForm.controls['name'].errors" class="text-danger">
-                        <div *ngIf="submitted && machineFleetForm.controls['name'].errors['required']">
-                            [Name] is required !
-                        </div>
-                    </div>
+                <!-- Name -->
+                <div>
+                    <label for="name">Name:</label>
+                    <input id="name" formControlName="name" type="text" />
                 </div>
 
-                <div class="form-group">
-                    <label for="status" style="font-weight: bold;">Status</label>
-                    <input id="status" class="form-control" formControlName="status" type="number"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['status'].errors}" />
-                    <div *ngIf="submitted && machineFleetForm.controls['status'].errors" class="text-danger">
-                        <div *ngIf="submitted && machineFleetForm.controls['status'].errors['required']">
-                            [Status] is required !
-                        </div>
-                    </div>
+                <!-- Status -->
+                <div>
+                    <label for="status">Status:</label>
+                    <input id="status" formControlName="status" type="number" />
                 </div>
 
-                <div class="form-group">
-                    <label for="performance" style="font-weight: bold;">Performance</label>
-                    <input id="performance" class="form-control" formControlName="performance" type="number"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['performance'].errors}" />
-
-                    <div *ngIf="submitted && machineFleetForm.controls['performance'].errors" class="text-danger">
-                        <div *ngIf="submitted && machineFleetForm.controls['performance'].errors['required']">
-                            [Performance] is required !
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="performanceLog" style="font-weight: bold;">Performance Log</label>
-                    <input id="performanceLog" class="form-control" formControlName="performanceLog" type="text"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['performanceLog'].errors}" />
-
-                    <div *ngIf="submitted && machineFleetForm.controls['performanceLog'].errors" class="text-danger">
-                        <div *ngIf="submitted && machineFleetForm.controls['performanceLog'].errors['required']">
-                            [Performance Log] is required !
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="error" style="font-weight: bold;">Error</label>
-                    <input id="error" class="form-control" formControlName="error" type="text"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['error'].errors}" />
-
-                    <div *ngIf="submitted && machineFleetForm.controls['error'].errors" class="text-danger">
-                        <div *ngIf="submitted && machineFleetForm.controls['error'].errors['required']">
-                            [Error] is required !
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="errorLog" style="font-weight: bold;">Error Log</label>
-                    <input id="errorLog" class="form-control" formControlName="errorLog" type="text"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['errorLog'].errors}" />
-
-                    <div *ngIf="submitted && machineFleetForm.controls['errorLog'].errors" class="text-danger">
-                        <div *ngIf="submitted && machineFleetForm.controls['errorLog'].errors['required']">
-                            [Error Log] is required !
-                        </div>
-                    </div>
+                <!-- Performance -->
+                <div>
+                    <label for="performance">Performance:</label>
+                    <input id="performance" formControlName="performance" type="number" />
                 </div>
 
-                <div class="form-group">
-                    <label for="producedParts" style="font-weight: bold;">Produced Parts</label>
-                    <input id="producedParts" class="form-control" formControlName="producedParts" type="number"
-                        [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['producedParts'].errors}" />
-
-                    <div *ngIf="submitted && machineFleetForm.controls['producedParts'].errors" class="text-danger">
-                        <div *ngIf="submitted && machineFleetForm.controls['producedParts'].errors['required']">
-                            [Produced Parts] is required !
-                        </div>
-                    </div>
+                <!-- Produced Parts -->
+                <div>
+                    <label for="producedParts">Produced Parts:</label>
+                    <input id="producedParts" formControlName="producedParts" type="number" />
                 </div>
 
-                <br>
+                <!-- Production -->
                 <fieldset formGroupName="production">
-                    <legend style="font-style: italic;">Production</legend>
-                    <div class="form-group">
-                        <label for="currentProduct" style="font-weight: bold;">Current Product</label>
-                        <input id="currentProduct" class="form-control" formControlName="currentProduct" type="text"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['currentProduct'].errors}" />
-
-                        <div *ngIf="submitted && machineFleetForm.controls['currentProduct'].errors"
-                            class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['currentProduct'].errors['required']">
-                                [Current Product] is required !
-                            </div>
-                        </div>
+                    <legend>Production</legend>
+                    <div>
+                        <label for="currentProduct">Current Product:</label>
+                        <input id="currentProduct" formControlName="currentProduct" type="text" />
                     </div>
-
-                    <div class="form-group">
-                        <label for="partsInBatch" style="font-weight: bold;">Parts in Batch</label>
-                        <input id="partsInBatch" class="form-control" formControlName="partsInBatch" type="number"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['partsInBatch'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['partsInBatch'].errors" class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['partsInBatch'].errors['required']">
-                                [Parts in Batch] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="partsInBatch">Parts in Batch:</label>
+                        <input id="partsInBatch" formControlName="partsInBatch" type="number" />
                     </div>
-
-                    <div class="form-group">
-                        <label for="partsCompleted" style="font-weight: bold;">Parts Completed</label>
-                        <input id="partsCompleted" class="form-control" formControlName="partsCompleted" type="number"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['partsCompleted'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['partsCompleted'].errors"
-                            class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['partsCompleted'].errors['required']">
-                                [Parts Completed] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="partsCompleted">Parts Completed:</label>
+                        <input id="partsCompleted" formControlName="partsCompleted" type="number" />
                     </div>
-
-                    <div class="form-group">
-                        <label for="batchStartTime" style="font-weight: bold;">Batch Start Time</label>
-                        <input id="batchStartTime" class="form-control" formControlName="batchStartTime"
-                            type="datetime-local"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['batchStartTime'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['batchStartTime'].errors"
-                            class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['batchStartTime'].errors['required']">
-                                [Batch Start Time] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="batchStartTime">Batch Start Time:</label>
+                        <input id="batchStartTime" formControlName="batchStartTime" type="datetime-local" />
                     </div>
                 </fieldset>
-                <br>
+
+                <!-- Details -->
                 <fieldset formGroupName="details">
-                    <legend style="font-style: italic;">Details</legend>
-                    <div class="form-group">
-                        <label for="manufacturer" style="font-weight: bold;">Manufacturer</label>
-                        <input id="manufacturer" class="form-control" formControlName="manufacturer" type="text"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['manufacturer'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['manufacturer'].errors" class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['manufacturer'].errors['required']">
-                                [Manufacturer] is required !
-                            </div>
-                        </div>
+                    <legend>Details</legend>
+                    <div>
+                        <label for="manufacturer">Manufacturer:</label>
+                        <input id="manufacturer" formControlName="manufacturer" type="text" />
                     </div>
-
-                    <div class="form-group">
-                        <label for="modelNumber" style="font-weight: bold;">Model Number</label>
-                        <input id="modelNumber" class="form-control" formControlName="modelNumber" type="text"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['modelNumber'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['modelNumber'].errors" class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['modelNumber'].errors['required']">
-                                [Model Number] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="modelNumber">Model Number:</label>
+                        <input id="modelNumber" formControlName="modelNumber" type="text" />
                     </div>
-
-                    <div class="form-group">
-                        <label for="lastMaintenance" style="font-weight: bold;">Last Maintenance</label>
-                        <input id="lastMaintenance" class="form-control" formControlName="lastMaintenance" type="date"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['lastMaintenance'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['lastMaintenance'].errors"
-                            class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['lastMaintenance'].errors['required']">
-                                [Last Maintenance] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="lastMaintenance">Last Maintenance:</label>
+                        <input id="lastMaintenance" formControlName="lastMaintenance" type="date" />
                     </div>
-
-                    <div class="form-group">
-                        <label for="location" style="font-weight: bold;">Location</label>
-                        <input id="location" class="form-control" formControlName="location" type="text"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['location'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['location'].errors" class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['location'].errors['required']">
-                                [Location] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="location">Location:</label>
+                        <input id="location" formControlName="location" type="text" />
                     </div>
                 </fieldset>
 
+                <!-- Live Sensors -->
                 <fieldset formGroupName="liveSensors">
                     <legend>Live Sensors</legend>
-                    <div class="form-group">
-                        <label for="temperatureC" style="font-weight: bold;">Temperature (°C)</label>
-                        <input id="temperatureC" class="form-control" formControlName="temperatureC" type="number"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['temperatureC'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['temperatureC'].errors" class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['temperatureC'].errors['required']">
-                                [Temperature] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="temperatureC">Temperature (°C):</label>
+                        <input id="temperatureC" formControlName="temperatureC" type="number" />
                     </div>
-
-                    <div class="form-group">
-                        <label for="vibrationLevel" style="font-weight: bold;">Vibration Level</label>
-                        <input id="vibrationLevel" class="form-control" formControlName="vibrationLevel" type="number"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['vibrationLevel'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['vibrationLevel'].errors"
-                            class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['vibrationLevel'].errors['required']">
-                                [Vibration Level] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="vibrationLevel">Vibration Level:</label>
+                        <input id="vibrationLevel" formControlName="vibrationLevel" type="number" />
                     </div>
-
-                    <div class="form-group">
-                        <label for="powerConsumptionKw" style="font-weight: bold;">Power Consumption (kW)</label>
-                        <input id="powerConsumptionKw" class="form-control" formControlName="powerConsumptionKw"
-                            type="number"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['powerConsumptionKw'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['powerConsumptionKw'].errors"
-                            class="text-danger">
-                            <div
-                                *ngIf="submitted && machineFleetForm.controls['powerConsumptionKw'].errors['required']">
-                                [Power Consumption] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="powerConsumptionKw">Power Consumption (kW):</label>
+                        <input id="powerConsumptionKw" formControlName="powerConsumptionKw" type="number" />
                     </div>
                 </fieldset>
 
+                <!-- Current Shift -->
                 <fieldset formGroupName="currentShift">
                     <legend>Current Shift</legend>
-                    <div class="form-group">
-                        <label for="operatorName" style="font-weight: bold;">Operator Name</label>
-                        <input id="operatorName" class="form-control" formControlName="operatorName" type="text"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['operatorName'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['operatorName'].errors" class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['operatorName'].errors['required']">
-                                [Operator Name] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="operatorName">Operator Name:</label>
+                        <input id="operatorName" formControlName="operatorName" type="text" />
                     </div>
-
-                    <div class="form-group">
-                        <label for="shift" style="font-weight: bold;">Shift</label>
-                        <input id="shift" class="form-control" formControlName="shift" type="text"
-                            [ngClass]="{'is-invalid':submitted && machineFleetForm.controls['shift'].errors}" />
-                        <div *ngIf="submitted && machineFleetForm.controls['shift'].errors" class="text-danger">
-                            <div *ngIf="submitted && machineFleetForm.controls['shift'].errors['required']">
-                                [Shift] is required !
-                            </div>
-                        </div>
+                    <div>
+                        <label for="shift">Shift:</label>
+                        <input id="shift" formControlName="shift" type="text" />
                     </div>
                 </fieldset>
 
-                <br>
+                <!-- Performance Log -->
+                <div formArrayName="performanceLog">
+                    <h3>Performance Log</h3>
+                    <div *ngFor="let log of machineFleetForm.get('performanceLog')['controls']; let i = index"
+                        [formGroupName]="i">
+                        <label for="timestamp-{{ i }}">Timestamp:</label>
+                        <input id="timestamp-{{ i }}" formControlName="timestamp" type="datetime-local" />
+                        <label for="performance-{{ i }}">Performance:</label>
+                        <input id="performance-{{ i }}" formControlName="performance" type="number" />
+                    </div>
+                </div>
+
+                <!-- Errors -->
+                <div formArrayName="errors">
+                    <h3>Errors</h3>
+                    <div *ngFor="let error of machineFleetForm.get('errors')['controls']; let i = index"
+                        [formGroupName]="i">
+                        <label for="errorCode-{{ i }}">Error Code:</label>
+                        <input id="errorCode-{{ i }}" formControlName="errorCode" type="text" />
+                        <label for="errorMessage-{{ i }}">Error Message:</label>
+                        <input id="errorMessage-{{ i }}" formControlName="errorMessage" type="text" />
+                    </div>
+                </div>
+
+                <!-- Error History -->
+                <div formArrayName="errorHistory">
+                    <h3>Error History</h3>
+                    <div *ngFor="let error of machineFleetForm.get('errorHistory')['controls']; let i = index"
+                        [formGroupName]="i">
+                        <label for="timestamp-{{ i }}">Timestamp:</label>
+                        <input id="timestamp-{{ i }}" formControlName="timestamp" type="datetime-local" />
+                        <label for="errorCode-{{ i }}">Error Code:</label>
+                        <input id="errorCode-{{ i }}" formControlName="errorCode" type="text" />
+                        <label for="errorMessage-{{ i }}">Error Message:</label>
+                        <input id="errorMessage-{{ i }}" formControlName="errorMessage" type="text" />
+                    </div>
+                </div>
+
+                <!-- Maintenance History -->
+                <div formArrayName="maintenanceHistory">
+                    <h3>Maintenance History</h3>
+                    <div *ngFor="let history of machineFleetForm.get('maintenanceHistory')['controls']; let i = index"
+                        [formGroupName]="i">
+                        <label for="date-{{ i }}">Date:</label>
+                        <input id="date-{{ i }}" formControlName="date" type="date" />
+                        <label for="details-{{ i }}">Details:</label>
+                        <input id="details-{{ i }}" formControlName="details" type="text" />
+                    </div>
+                </div>
+
+
                 <div style="display: flex;">
                     <div style="margin-right: 6%;">
                         <button type="submit" class="btn btn-primary">Submit</button>

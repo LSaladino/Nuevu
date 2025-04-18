@@ -100,7 +100,7 @@
                         <input id="shift" formControlName="shift" type="text" />
                     </div>
                 </fieldset>
-
+ 
                 <!-- Performance Log -->
                 <div formArrayName="performanceLog">
                     <h3>Performance Log</h3>
@@ -118,10 +118,8 @@
                     <h3>Errors</h3>
                     <div *ngFor="let error of machineFleetForm.get('errors')['controls']; let i = index"
                         [formGroupName]="i">
-                        <label for="errorCode-{{ i }}">Error Code:</label>
-                        <input id="errorCode-{{ i }}" formControlName="errorCode" type="text" />
-                        <label for="errorMessage-{{ i }}">Error Message:</label>
-                        <input id="errorMessage-{{ i }}" formControlName="errorMessage" type="text" />
+                        {{i + 1}}
+
                     </div>
                 </div>
 
@@ -135,7 +133,9 @@
                         <label for="errorCode-{{ i }}">Error Code:</label>
                         <input id="errorCode-{{ i }}" formControlName="errorCode" type="text" />
                         <label for="errorMessage-{{ i }}">Error Message:</label>
-                        <input id="errorMessage-{{ i }}" formControlName="errorMessage" type="text" />
+                        <input id="errorMessage-{{ i }}" formControlName="message" type="text" />
+                        <label for="resolved-{{ i }}">Resolved:</label>
+                        <input id="resolved-{{ i }}" formControlName="resolved" type="checkbox" />
                     </div>
                 </div>
 

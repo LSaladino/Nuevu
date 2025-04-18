@@ -16,6 +16,9 @@ export class MachineFleetComponent implements OnInit {
   public machineFleet: any[] = [];
   public submitted: boolean = false;
   performanceLog: string[] = []; // Define the performanceLog property as an array of strings
+  errors: string[] = []; // Define the errors property as an array of strings
+  errorHistory: string[] = []; // Define the errorHistory property as an array of strings
+  maintenanceHistory: string[] = []; // Define the maintenanceHistory property as an array of strings
 
   constructor(private fb: FormBuilder,
     private serviceMachineFleet: ServiceMachineFleetService,
@@ -29,14 +32,16 @@ export class MachineFleetComponent implements OnInit {
       name: ['', Validators.required],
       status: [0, Validators.required],
       performance: [0, Validators.required],
-      performanceLog: this.buildPerformanceLogArray(),
 
-      errors: this.fb.array([
+      // performanceLog: this.buildPerformanceLogArray(),
+      performanceLog: this.fb.array([]), // Initialize as an empty FormArray
 
-      ]),
-      errorHistory: this.fb.array([
+      // errors: this.buildErrorsArray(),
+      errors: this.fb.array([]), // Initialize as an empty FormArray
 
-      ]),
+      // errorHistory: this.buildErrorHistoryArray(),
+      errorHistory: this.fb.array([]), // Initialize as an empty FormArray
+
       producedParts: [0, Validators.required],
       production: this.fb.group({
         currentProduct: ['', Validators.required],
@@ -50,9 +55,10 @@ export class MachineFleetComponent implements OnInit {
         lastMaintenance: ['', Validators.required],
         location: ['', Validators.required]
       }),
-      maintenanceHistory: this.fb.array([
 
-      ]),
+      // maintenanceHistory: this.buildMaintenanceHistoryArray(),
+      maintenanceHistory: this.fb.array([]), // Initialize as an empty FormArray
+
       liveSensors: this.fb.group({
         temperatureC: [0, Validators.required],
         vibrationLevel: [0, Validators.required],
@@ -137,16 +143,18 @@ export class MachineFleetComponent implements OnInit {
 
     this.setFormArray('errors', machine.errors, (error) =>
       this.fb.group({
-        errorCode: [error.errorCode, Validators.required],
-        errorMessage: [error.errorMessage, Validators.required]
+        message: [error.message, Validators.required],
       })
     );
+
+
 
     this.setFormArray('errorHistory', machine.errorHistory, (error) =>
       this.fb.group({
         timestamp: [error.timestamp, Validators.required],
         errorCode: [error.errorCode, Validators.required],
-        errorMessage: [error.errorMessage, Validators.required]
+        message: [error.message, Validators.required],
+        resolved: [error.resolved, Validators.required]
       })
     );
 
@@ -246,19 +254,35 @@ export class MachineFleetComponent implements OnInit {
     this.oSelectedMachine = true;
   }
 
-  buildPerformanceLogArray() {
-    // const performanceLogArray = this.machineFleetForm.get('performanceLog') as FormArray;
-    // performanceLogArray.push(this.fb.group({
-    //   timestamp: ['', Validators.required],
-    //   performance: [0, Validators.required]
-    // }));
+  // buildPerformanceLogArray() {
+  //   const arr = this.performanceLog.map(log => {
+  //     return new FormControl(false);
+  //   });
+  //   return this.fb.array(arr);
 
-    const arr = this.performanceLog.map(log => {
-      return new FormControl(false);
-    });
-    return this.fb.array(arr);
+  // }
 
-  }
+  // buildErrorsArray() {
+  //   const arr = this.errors.map(log => {
+  //     return new FormControl(false);
+  //   });
+  //   return this.fb.array(arr);
+  // }
+
+  // buildErrorHistoryArray() {
+  //   const arr = this.errorHistory.map(log => {
+  //     return new FormControl(false);
+  //   });
+  //   return this.fb.array(arr);
+  // }
+
+  // buildMaintenanceHistoryArray() {
+  //   const arr = this.maintenanceHistory.map(log => {
+  //     return new FormControl(false);
+  //   });
+  //   return this.fb.array(arr);
+  // }
+ 
 
 
 

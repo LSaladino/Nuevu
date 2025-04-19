@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { DialogService } from 'src/app/services/dialog.service';
 import { ServiceMachineFleetService } from 'src/app/services/service-machine-fleet.service';
 
@@ -19,6 +20,8 @@ export class MachineFleetComponent implements OnInit {
   errors: string[] = []; // Define the errors property as an array of strings
   errorHistory: string[] = []; // Define the errorHistory property as an array of strings
   maintenanceHistory: string[] = []; // Define the maintenanceHistory property as an array of strings
+  public array_ofMachines$: Observable<any[]> | undefined;
+
 
   constructor(private fb: FormBuilder,
     private serviceMachineFleet: ServiceMachineFleetService,
@@ -86,7 +89,8 @@ export class MachineFleetComponent implements OnInit {
   }
 
   getAllMachines() {
-    this.serviceMachineFleet.getAllMachines().subscribe(
+    this.array_ofMachines$ = this.serviceMachineFleet.getAllMachines();
+    this.array_ofMachines$.subscribe(
       (response) => {
         console.log(response);
         this.machineFleet = response;
@@ -97,10 +101,23 @@ export class MachineFleetComponent implements OnInit {
         this.toastr.error('Error fetching machines');
       }
     );
+    // this.serviceMachineFleet.getAllMachines().subscribe(
+    //   (response) => {
+    //     console.log(response);
+    //     this.machineFleet = response;
+    //     this.toastr.success('Machines fetched successfully');
+    //   },
+    //   (error) => {
+    //     console.error(error);
+    //     this.toastr.error('Error fetching machines');
+    //   }
+    // );
+
   }
 
 
   onSelectMachine(machine: any) {
+
     this.machineFleetForm.reset();
 
     // Patch simple fields
@@ -246,7 +263,6 @@ export class MachineFleetComponent implements OnInit {
   onResetForm() {
     this.machineFleetForm.reset();
     this.submitted = false;
-    // this.oSelectedMachine = false;
   }
 
   onNewMachine() {
@@ -254,38 +270,7 @@ export class MachineFleetComponent implements OnInit {
     this.oSelectedMachine = true;
   }
 
-  // buildPerformanceLogArray() {
-  //   const arr = this.performanceLog.map(log => {
-  //     return new FormControl(false);
-  //   });
-  //   return this.fb.array(arr);
-
-  // }
-
-  // buildErrorsArray() {
-  //   const arr = this.errors.map(log => {
-  //     return new FormControl(false);
-  //   });
-  //   return this.fb.array(arr);
-  // }
-
-  // buildErrorHistoryArray() {
-  //   const arr = this.errorHistory.map(log => {
-  //     return new FormControl(false);
-  //   });
-  //   return this.fb.array(arr);
-  // }
-
-  // buildMaintenanceHistoryArray() {
-  //   const arr = this.maintenanceHistory.map(log => {
-  //     return new FormControl(false);
-  //   });
-  //   return this.fb.array(arr);
-  // }
- 
-
-
-
+  
   //####################################################################
 
 

@@ -1,213 +1,217 @@
 <br>
 <br>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3" *ngIf="oSelectedMachine">
-            <form [formGroup]="machineFleetForm" (ngSubmit)="onSubmit()">
+<div class="container" >
+<div class="row">
+    <div class="col-sm-3" *ngIf="oSelectedMachine">
+        <form [formGroup]="machineFleetForm" (ngSubmit)="onSubmit()">
 
-                <!-- Name -->
-                <div>
-                    <label for="name">Name:</label>
-                    <input id="name" formControlName="name" type="text" />
+
+            <!-- Name -->
+            <div class="single-input label-above">
+                <label for="name">Name</label>
+                <input id="name" formControlName="name" type="text" class="input" />
+            </div>
+
+
+            <!-- Status -->
+            <div class="single-input label-above">
+                <label for="status">Status</label>
+                <input id="status" formControlName="status" type="number" class="input" />
+            </div>
+
+            <!-- Performance -->
+            <div class="single-input label-above">
+                <label for="performance">Performance</label>
+                <input id="performance" formControlName="performance" type="number" class="input" />
+            </div>
+
+            <!-- Produced Parts -->
+            <div class="single-input label-above">
+                <label for="producedParts">Produced Parts</label>
+                <input id="producedParts" formControlName="producedParts" type="number" class="input" />
+            </div>
+
+            <!-- Production -->
+            <fieldset formGroupName="production" class="border rounded-3 p-3">
+                <legend class="float-none w-auto px-3">Production</legend>
+                <div class="single-input label-above">
+                    <label for="currentProduct">Current Product</label>
+                    <input id="currentProduct" formControlName="currentProduct" type="text" class="input" />
                 </div>
-
-                <!-- Status -->
-                <div>
-                    <label for="status">Status:</label>
-                    <input id="status" formControlName="status" type="number" />
+                <div class="single-input label-above">
+                    <label for="partsInBatch">Parts in Batch</label>
+                    <input id="partsInBatch" formControlName="partsInBatch" type="number" class="input" />
                 </div>
-
-                <!-- Performance -->
-                <div>
-                    <label for="performance">Performance:</label>
-                    <input id="performance" formControlName="performance" type="number" />
+                <div class="single-input label-above">
+                    <label for="partsCompleted">Parts Completed</label>
+                    <input id="partsCompleted" formControlName="partsCompleted" type="number" class="input" />
                 </div>
-
-                <!-- Produced Parts -->
-                <div>
-                    <label for="producedParts">Produced Parts:</label>
-                    <input id="producedParts" formControlName="producedParts" type="number" />
+                <div class="single-input label-above">
+                    <label for="batchStartTime">Batch Start Time</label>
+                    <input id="batchStartTime" formControlName="batchStartTime" type="datetime-local" class="input" />
                 </div>
+            </fieldset>
 
-                <!-- Production -->
-                <fieldset formGroupName="production">
-                    <legend>Production</legend>
-                    <div>
-                        <label for="currentProduct">Current Product:</label>
-                        <input id="currentProduct" formControlName="currentProduct" type="text" />
-                    </div>
-                    <div>
-                        <label for="partsInBatch">Parts in Batch:</label>
-                        <input id="partsInBatch" formControlName="partsInBatch" type="number" />
-                    </div>
-                    <div>
-                        <label for="partsCompleted">Parts Completed:</label>
-                        <input id="partsCompleted" formControlName="partsCompleted" type="number" />
-                    </div>
-                    <div>
-                        <label for="batchStartTime">Batch Start Time:</label>
-                        <input id="batchStartTime" formControlName="batchStartTime" type="datetime-local" />
-                    </div>
-                </fieldset>
+            <!-- Details -->
+            <fieldset formGroupName="details" class="border rounded-3 p-3">
+                <legend class="float-none w-auto px-3">Details</legend>
+                <div class="single-input label-above">
+                    <label for="manufacturer">Manufacturer</label>
+                    <input id="manufacturer" formControlName="manufacturer" type="text" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="modelNumber">Model Number</label>
+                    <input id="modelNumber" formControlName="modelNumber" type="text" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="lastMaintenance">Last Maintenance</label>
+                    <input id="lastMaintenance" formControlName="lastMaintenance" type="date" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="location">Location</label>
+                    <input id="location" formControlName="location" type="text" class="input" />
+                </div>
+            </fieldset>
 
-                <!-- Details -->
-                <fieldset formGroupName="details">
-                    <legend>Details</legend>
-                    <div>
-                        <label for="manufacturer">Manufacturer:</label>
-                        <input id="manufacturer" formControlName="manufacturer" type="text" />
-                    </div>
-                    <div>
-                        <label for="modelNumber">Model Number:</label>
-                        <input id="modelNumber" formControlName="modelNumber" type="text" />
-                    </div>
-                    <div>
-                        <label for="lastMaintenance">Last Maintenance:</label>
-                        <input id="lastMaintenance" formControlName="lastMaintenance" type="date" />
-                    </div>
-                    <div>
-                        <label for="location">Location:</label>
-                        <input id="location" formControlName="location" type="text" />
-                    </div>
-                </fieldset>
+            <!-- Live Sensors -->
+            <fieldset formGroupName="liveSensors" class="border rounded-3 p-3">
+                <legend class="float-none w-auto px-3">Live Sensors</legend>
+                <div class="single-input label-above">
+                    <label for="temperatureC">Temperature (°C)</label>
+                    <input id="temperatureC" formControlName="temperatureC" type="number" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="vibrationLevel">Vibration Level</label>
+                    <input id="vibrationLevel" formControlName="vibrationLevel" type="number" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="powerConsumptionKw">Power Consumption (kW)</label>
+                    <input id="powerConsumptionKw" formControlName="powerConsumptionKw" type="number" class="input" />
+                </div>
+            </fieldset>
 
-                <!-- Live Sensors -->
-                <fieldset formGroupName="liveSensors">
-                    <legend>Live Sensors</legend>
-                    <div>
-                        <label for="temperatureC">Temperature (°C):</label>
-                        <input id="temperatureC" formControlName="temperatureC" type="number" />
-                    </div>
-                    <div>
-                        <label for="vibrationLevel">Vibration Level:</label>
-                        <input id="vibrationLevel" formControlName="vibrationLevel" type="number" />
-                    </div>
-                    <div>
-                        <label for="powerConsumptionKw">Power Consumption (kW):</label>
-                        <input id="powerConsumptionKw" formControlName="powerConsumptionKw" type="number" />
-                    </div>
-                </fieldset>
+            <!-- Current Shift -->
+            <fieldset formGroupName="currentShift" class="border rounded-3 p-3">
+                <legend class="float-none w-auto px-3">Current Shift</legend>
+                <div class="single-input label-above">
+                    <label for="operatorName">Operator Name</label>
+                    <input id="operatorName" formControlName="operatorName" type="text" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="shift">Shift</label>
+                    <input id="shift" formControlName="shift" type="text" class="input" />
+                </div>
+            </fieldset>
 
-                <!-- Current Shift -->
-                <fieldset formGroupName="currentShift">
-                    <legend>Current Shift</legend>
-                    <div>
-                        <label for="operatorName">Operator Name:</label>
-                        <input id="operatorName" formControlName="operatorName" type="text" />
-                    </div>
-                    <div>
-                        <label for="shift">Shift:</label>
-                        <input id="shift" formControlName="shift" type="text" />
-                    </div>
-                </fieldset>
- 
-                <!-- Performance Log -->
+            <!-- Performance Log -->
+            <fieldset class="border rounded-3 p-3">
+                <legend class="float-none w-auto px-3">Performance Log</legend>
                 <div formArrayName="performanceLog">
-                    <h3>Performance Log</h3>
                     <div *ngFor="let log of machineFleetForm.get('performanceLog')['controls']; let i = index"
-                        [formGroupName]="i">
-                        <label for="timestamp-{{ i }}">Timestamp:</label>
-                        <input id="timestamp-{{ i }}" formControlName="timestamp" type="datetime-local" />
-                        <label for="performance-{{ i }}">Performance:</label>
-                        <input id="performance-{{ i }}" formControlName="performance" type="number" />
+                        [formGroupName]="i" class="single-input label-above">
+                        <label for="timestamp-{{ i }}">Timestamp</label>
+                        <input id="timestamp-{{ i }}" formControlName="timestamp" type="datetime-local" class="input" />
+                        <label for="performance-{{ i }}">Performance</label>
+                        <input id="performance-{{ i }}" formControlName="performance" type="number" class="input" />
                     </div>
                 </div>
+            </fieldset>
 
-                <!-- Errors -->
+            <!-- Errors -->
+            <fieldset class="border rounded-3 p-3">
+                <legend class="float-none w-auto px-3">Errors</legend>
                 <div formArrayName="errors">
-                    <h3>Errors</h3>
                     <div *ngFor="let error of machineFleetForm.get('errors')['controls']; let i = index"
                         [formGroupName]="i">
                         {{i + 1}}
 
                     </div>
                 </div>
+            </fieldset>
 
-                <!-- Error History -->
+
+            <!-- Error History -->
+            <fieldset class="border rounded-3 p-3">
+                <legend class="float-none w-auto px-3">Error History</legend>
                 <div formArrayName="errorHistory">
-                    <h3>Error History</h3>
                     <div *ngFor="let error of machineFleetForm.get('errorHistory')['controls']; let i = index"
-                        [formGroupName]="i">
-                        <label for="timestamp-{{ i }}">Timestamp:</label>
-                        <input id="timestamp-{{ i }}" formControlName="timestamp" type="datetime-local" />
-                        <label for="errorCode-{{ i }}">Error Code:</label>
-                        <input id="errorCode-{{ i }}" formControlName="errorCode" type="text" />
-                        <label for="errorMessage-{{ i }}">Error Message:</label>
-                        <input id="errorMessage-{{ i }}" formControlName="message" type="text" />
-                        <label for="resolved-{{ i }}">Resolved:</label>
-                        <input id="resolved-{{ i }}" formControlName="resolved" type="checkbox" />
+                        [formGroupName]="i" class="single-input label-above">
+                        <label for="timestamp-{{ i }}">Timestamp</label>
+                        <input id="timestamp-{{ i }}" formControlName="timestamp" type="datetime-local" class="input" />
+                        <label for="errorCode-{{ i }}">Error Code</label>
+                        <input id="errorCode-{{ i }}" formControlName="errorCode" type="text" class="input" />
+                        <label for="errorMessage-{{ i }}">Error Message</label>
+                        <input id="errorMessage-{{ i }}" formControlName="message" type="text" class="input" />
+                        <label for="resolved-{{ i }}">Resolved</label>
+                        <input id="resolved-{{ i }}" formControlName="resolved" type="checkbox" class="input" />
                     </div>
                 </div>
+            </fieldset>
 
-                <!-- Maintenance History -->
+
+            <!-- Maintenance History -->
+            <fieldset class="border rounded-3 p-3">
+                <legend class="float-none w-auto px-3">Maintenance History</legend>
                 <div formArrayName="maintenanceHistory">
-                    <h3>Maintenance History</h3>
                     <div *ngFor="let history of machineFleetForm.get('maintenanceHistory')['controls']; let i = index"
-                        [formGroupName]="i">
+                        [formGroupName]="i" class="single-input label-above">
                         <label for="date-{{ i }}">Date:</label>
-                        <input id="date-{{ i }}" formControlName="date" type="date" />
+                        <input id="date-{{ i }}" formControlName="date" type="date" class="input" />
                         <label for="details-{{ i }}">Details:</label>
-                        <input id="details-{{ i }}" formControlName="details" type="text" />
+                        <input id="details-{{ i }}" formControlName="details" type="text" class="input" />
                     </div>
                 </div>
+            </fieldset>
 
-
-                <div style="display: flex;">
-                    <div style="margin-right: 6%;">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                    <div style="margin-right: 6%;">
-                        <button type="button" class="btn btn-danger" (click)="onCloseForm()">Close</button>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-warning" (click)="onResetForm()">Clear</button>
-                    </div>
+            <div style="display: flex;">
+                <div style="margin-right: 6%;">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-            </form>
-        </div>
-
-        <div [ngClass]="{'col-sm-9':oSelectedMachine, 'col-sm-12':!oSelectedMachine}">
-            <div style="float: inline-end;">
-                <button class="btn btn-success" (click)="onNewMachine()">New Machine</button>
+                <div style="margin-right: 6%;">
+                    <button type="button" class="btn btn-danger" (click)="onCloseForm()">Close</button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-warning" (click)="onResetForm()">Clear</button>
+                </div>
             </div>
-            <table class="table table-light table-hover">
-                <thead class="table-primary">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Performance</th>
-                        <th>Produced Parts</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let machine of machineFleet" (click)="onSelectMachine(machine)">
-                        <td>{{ machine.id }}</td>
-                        <td>{{ machine.name }}</td>
-                        <td>{{ machine.status }}</td>
-                        <td>{{ machine.performance }}</td>
-                        <td>{{ machine.producedParts }}</td>
-                        <td>
-                            <div>
-                                <div style="float: left; margin-right: 10px;">
-                                    <button (click)="onUpdateMachine(machine)"
-                                        class="text-dark btn btn-sm btn-outline-warning">Update</button>
-                                </div>
-                                <div style="float: inline-start;">
-                                    <button (click)="onDeleteMachine(machine)"
-                                        class="btn btn-sm btn-outline-danger">Delete</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-
-
-        </div>
-
+        </form>
     </div>
 
+    <div [ngClass]="{'col-sm-9':oSelectedMachine, 'col-sm-12':!oSelectedMachine}">
+        <div style="float: inline-end;">
+            <button class="btn btn-success" (click)="onNewMachine()">New Machine</button>
+        </div>
+        <table class="table table-light table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Performance</th>
+                    <th>Produced Parts</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let machine of machineFleet" (click)="onSelectMachine(machine)">
+                    <td>{{ machine.name }}</td>
+                    <td>{{ machine.status }}</td>
+                    <td>{{ machine.performance }}</td>
+                    <td>{{ machine.producedParts }}</td>
+                    <td>
+                        <div>
+                            <div style="float: left; margin-right: 10px;">
+                                <button (click)="onUpdateMachine(machine)"
+                                    class="text-dark btn btn-sm btn-outline-warning">Update</button>
+                            </div>
+                            <div style="float: inline-start;">
+                                <button (click)="onDeleteMachine(machine)"
+                                    class="btn btn-sm btn-outline-danger">Delete</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </div>

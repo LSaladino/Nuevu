@@ -23,11 +23,16 @@ export class ServiceMachineFleetService {
     return `${this.UrlPrincipal}/${id}`;
   }
 
-
   // POST
-  createMachine(machine: any): Observable<any> {
-    return this.http.post(this.UrlPrincipal, machine);
+  // createMachine(machine: any, ): Observable<any> {
+  //   return this.http.post<any>(`${this.UrlPrincipal}`, machine);
+  // }
+
+  createMachine(machine: any, HttpHeaders: any): Observable<any> {
+    return this.http.post<any>(this.UrlPrincipal, machine, { headers: HttpHeaders });
   }
+
+
   // PUT
   updateMachine(machine: any): Observable<any> {
     return this.http.put(`${this.UrlPrincipal}/${machine.id}`, machine);

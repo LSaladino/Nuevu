@@ -5,6 +5,7 @@ import { Observable, timestamp } from 'rxjs';
 import { DialogService } from 'src/app/services/dialog.service';
 import { ServiceMachineFleetService } from 'src/app/services/service-machine-fleet.service';
 import { DatePipe } from '@angular/common';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-machine-fleet',
@@ -21,6 +22,7 @@ export class MachineFleetComponent implements OnInit {
   errorHistory: any[] = []; // Define the errorHistory property as an array of strings
   maintenanceHistory: any[] = []; // Define the maintenanceHistory property as an array of strings
   public array_ofMachines$: Observable<any[]> | undefined;
+  public insertStatus: boolean = false;
 
 
   constructor(private fb: FormBuilder,
@@ -41,7 +43,8 @@ export class MachineFleetComponent implements OnInit {
       performanceLog: this.fb.array([]), // Initialize as an empty FormArray
 
       // errors: this.buildErrorsArray(),
-      errors: this.fb.array([]), // Initialize as an empty FormArray
+      // errors: this.fb.array([]), // Initialize as an empty FormArray
+      errors: ['', Validators.required], // Initialize as an empty FormArray
 
       // errorHistory: this.buildErrorHistoryArray(),
       errorHistory: this.fb.array([]), // Initialize as an empty FormArray
@@ -83,14 +86,22 @@ export class MachineFleetComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    if (this.machineFleetForm.valid) {
-      console.log(this.machineFleetForm.value);
-      if (this.oSelectedMachine) {
+
+    if (!this.insertStatus) {
+      if (this.machineFleetForm.valid) {
         this.onUpdateMachine(this.machineFleetForm.value);
-      } else {
+      }
+    }
+    else {
+      let GUID = this.generateGUID();
+      this.machineFleetForm.patchValue({
+        id: GUID
+      });
+      if (this.machineFleetForm.valid) {
         this.onPostMachine();
       }
     }
+
   }
 
   getAllMachines() {
@@ -111,7 +122,7 @@ export class MachineFleetComponent implements OnInit {
 
 
   onSelectMachine(machine: any) {
-
+    this.insertStatus = false;
     this.oSelectedMachine = true;
     this.machineFleetForm.reset();
 
@@ -122,6 +133,7 @@ export class MachineFleetComponent implements OnInit {
       status: machine.status,
       performance: machine.performance,
       producedParts: machine.producedParts,
+      errors: machine.errors,
       production: {
         currentProduct: machine.production.currentProduct,
         partsInBatch: machine.production.partsInBatch,
@@ -157,11 +169,11 @@ export class MachineFleetComponent implements OnInit {
       })
     );
 
-    this.setFormArray('errors', machine.errors, (error) =>
-      this.fb.group({
-        message: [error.message, Validators.required],
-      })
-    );
+    // this.setFormArray('errors', machine.errors, (error) =>
+    //   this.fb.group({
+    //     errors: [error.message, Validators.required],
+    //   })
+    // );
 
 
 
@@ -189,6 +201,13 @@ export class MachineFleetComponent implements OnInit {
     items.forEach((item) => formArray.push(createGroupFn(item))); // Add new items
   }
 
+  private generateGUID(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (char) => {
+      const random = Math.random() * 16 | 0;
+      const value = char === 'x' ? random : (random & 0x3 | 0x8);
+      return value.toString(16);
+    });
+  }
 
 
   onDeleteMachine(machine: any) {
@@ -236,7 +255,19 @@ export class MachineFleetComponent implements OnInit {
 
   onPostMachine() {
     if (this.machineFleetForm.valid) {
-      this.serviceMachineFleet.createMachine(this.machineFleetForm.value).subscribe(
+      const formData = JSON.stringify(this.machineFleetForm.value);
+  
+      // Define HTTP headers
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          // 'Autorization':'Bearer ' + localStorage.getItem('token') // Replace with your actual token
+          'Autorization':'Bearer ' + 'AADDFFKKKLLLL'
+        })
+      };
+  
+      // Make the POST request with headers
+      this.serviceMachineFleet.createMachine(formData, httpOptions).subscribe(
         (response) => {
           console.log(response);
           this.toastr.success('Machine created successfully');
@@ -245,7 +276,11 @@ export class MachineFleetComponent implements OnInit {
         },
         (error) => {
           console.error(error);
-          this.toastr.error('Error creating machine');
+          if (error.status === 0) {
+            this.toastr.error('CORS error: Unable to connect to the API');
+          } else {
+            this.toastr.error('Error creating machine');
+          }
         }
       );
     } else {
@@ -268,31 +303,32 @@ export class MachineFleetComponent implements OnInit {
   onNewMachine() {
     this.machineFleetForm.reset();
     this.oSelectedMachine = true;
+    this.insertStatus = true;
 
     this.onAddPerformanceLog();
-    this.onAddError();
+    // this.onAddError();
     this.onAddErrorHistory();
     this.onAddMaintenanceHistory();
   }
 
   onAddPerformanceLog() {
     const performanceLogArray = this.machineFleetForm.get('performanceLog') as FormArray;
-  
+
     const newLog = new FormGroup({
       timestamp: new FormControl(''),
       performance: new FormControl(0),
     });
-  
+
     performanceLogArray.push(newLog);
   }
 
-  onAddError() {
-    const errorsArray = this.machineFleetForm.get('errors') as FormArray;
-    const newError = new FormGroup({
-      message: new FormControl(''),
-    });
-    errorsArray.push(newError);
-  }
+  // onAddError() {
+  //   const errorsArray = this.machineFleetForm.get('errors') as FormArray;
+  //   const newError = new FormGroup({
+  //     errors: new FormControl(''),
+  //   });
+  //   errorsArray.push(newError);
+  // }
 
   onAddErrorHistory() {
     const errorHistoryArray = this.machineFleetForm.get('errorHistory') as FormArray;

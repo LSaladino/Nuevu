@@ -30,7 +30,7 @@ export class ServiceMachineFleetService {
   }
   // PUT
   updateMachine(machine: any): Observable<any> {
-    return this.http.put(`${this.UrlPrincipal}`, machine);
+    return this.http.put(`${this.UrlPrincipal}/${machine.id}`, machine);
   }
   // DELETE
   deleteMachine(id: number): Observable<any> {

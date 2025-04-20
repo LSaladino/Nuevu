@@ -1,0 +1,7 @@
+{
+    "/api": {
+      "target": "https://ng-demo-api.opten.io/api/machines/",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }

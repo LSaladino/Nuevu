@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { Observable, timestamp } from 'rxjs';
 import { DialogService } from 'src/app/services/dialog.service';
 import { ServiceMachineFleetService } from 'src/app/services/service-machine-fleet.service';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-machine-fleet',
@@ -16,10 +16,10 @@ export class MachineFleetComponent implements OnInit {
   public oSelectedMachine: boolean = false;
   public machineFleet: any[] = [];
   public submitted: boolean = false;
-  performanceLog: string[] = []; // Define the performanceLog property as an array of strings
-  errors: string[] = []; // Define the errors property as an array of strings
-  errorHistory: string[] = []; // Define the errorHistory property as an array of strings
-  maintenanceHistory: string[] = []; // Define the maintenanceHistory property as an array of strings
+  performanceLog: any[] = []; // Define the performanceLog property as an array of strings
+  errors: any[] = []; // Define the errors property as an array of strings
+  errorHistory: any[] = []; // Define the errorHistory property as an array of strings
+  maintenanceHistory: any[] = []; // Define the maintenanceHistory property as an array of strings
   public array_ofMachines$: Observable<any[]> | undefined;
 
 
@@ -27,6 +27,7 @@ export class MachineFleetComponent implements OnInit {
     private serviceMachineFleet: ServiceMachineFleetService,
     private toastr: ToastrService,
     private dialogServise: DialogService,
+    private datePipe: DatePipe
 
   ) {
 
@@ -84,7 +85,11 @@ export class MachineFleetComponent implements OnInit {
     this.submitted = true;
     if (this.machineFleetForm.valid) {
       console.log(this.machineFleetForm.value);
-      this.onAddMachine();
+      if (this.oSelectedMachine) {
+        this.onUpdateMachine(this.machineFleetForm.value);
+      } else {
+        this.onPostMachine();
+      }
     }
   }
 
@@ -101,23 +106,13 @@ export class MachineFleetComponent implements OnInit {
         this.toastr.error('Error fetching machines');
       }
     );
-    // this.serviceMachineFleet.getAllMachines().subscribe(
-    //   (response) => {
-    //     console.log(response);
-    //     this.machineFleet = response;
-    //     this.toastr.success('Machines fetched successfully');
-    //   },
-    //   (error) => {
-    //     console.error(error);
-    //     this.toastr.error('Error fetching machines');
-    //   }
-    // );
 
   }
 
 
   onSelectMachine(machine: any) {
 
+    this.oSelectedMachine = true;
     this.machineFleetForm.reset();
 
     // Patch simple fields
@@ -131,12 +126,12 @@ export class MachineFleetComponent implements OnInit {
         currentProduct: machine.production.currentProduct,
         partsInBatch: machine.production.partsInBatch,
         partsCompleted: machine.production.partsCompleted,
-        batchStartTime: machine.production.batchStartTime
+        batchStartTime: this.datePipe.transform(machine.production.batchStartTime, 'yyyy-MM-ddTHH:mm', 'en')
       },
       details: {
         manufacturer: machine.details.manufacturer,
         modelNumber: machine.details.modelNumber,
-        lastMaintenance: machine.details.lastMaintenance,
+        lastMaintenance: this.datePipe.transform(machine.details.lastMaintenance, 'yyyy-MM-dd', 'en'),
         location: machine.details.location
       },
       liveSensors: {
@@ -152,8 +147,12 @@ export class MachineFleetComponent implements OnInit {
 
     // Patch FormArray fields
     this.setFormArray('performanceLog', machine.performanceLog, (log) =>
+      // Use datePipe to format the timestamp
       this.fb.group({
-        timestamp: [log.timestamp, Validators.required],
+        timestamp: [
+          this.datePipe.transform(log.timestamp, 'yyyy-MM-ddTHH:mm', 'en'), // Format the date
+          Validators.required
+        ],
         performance: [log.performance, Validators.required]
       })
     );
@@ -168,7 +167,7 @@ export class MachineFleetComponent implements OnInit {
 
     this.setFormArray('errorHistory', machine.errorHistory, (error) =>
       this.fb.group({
-        timestamp: [error.timestamp, Validators.required],
+        timestamp: [this.datePipe.transform(error.timestamp, 'yyyy-MM-ddTHH:mm', 'en'), Validators.required],
         errorCode: [error.errorCode, Validators.required],
         message: [error.message, Validators.required],
         resolved: [error.resolved, Validators.required]
@@ -177,7 +176,7 @@ export class MachineFleetComponent implements OnInit {
 
     this.setFormArray('maintenanceHistory', machine.maintenanceHistory, (history) =>
       this.fb.group({
-        date: [history.date, Validators.required],
+        date: [this.datePipe.transform(history.date, 'yyyy-MM-ddTHH:mm', 'en'), Validators.required],
         details: [history.details, Validators.required]
       })
     );
@@ -235,7 +234,7 @@ export class MachineFleetComponent implements OnInit {
     }
   }
 
-  onAddMachine() {
+  onPostMachine() {
     if (this.machineFleetForm.valid) {
       this.serviceMachineFleet.createMachine(this.machineFleetForm.value).subscribe(
         (response) => {
@@ -250,6 +249,7 @@ export class MachineFleetComponent implements OnInit {
         }
       );
     } else {
+      console.log(this.machineFleetForm);
       this.toastr.error('Please fill all required fields');
     }
 
@@ -268,9 +268,52 @@ export class MachineFleetComponent implements OnInit {
   onNewMachine() {
     this.machineFleetForm.reset();
     this.oSelectedMachine = true;
+
+    this.onAddPerformanceLog();
+    this.onAddError();
+    this.onAddErrorHistory();
+    this.onAddMaintenanceHistory();
   }
 
+  onAddPerformanceLog() {
+    const performanceLogArray = this.machineFleetForm.get('performanceLog') as FormArray;
   
+    const newLog = new FormGroup({
+      timestamp: new FormControl(''),
+      performance: new FormControl(0),
+    });
+  
+    performanceLogArray.push(newLog);
+  }
+
+  onAddError() {
+    const errorsArray = this.machineFleetForm.get('errors') as FormArray;
+    const newError = new FormGroup({
+      message: new FormControl(''),
+    });
+    errorsArray.push(newError);
+  }
+
+  onAddErrorHistory() {
+    const errorHistoryArray = this.machineFleetForm.get('errorHistory') as FormArray;
+    const newError = new FormGroup({
+      timestamp: new FormControl(''),
+      errorCode: new FormControl(''),
+      message: new FormControl(''),
+      resolved: new FormControl(false)
+    });
+    errorHistoryArray.push(newError);
+  }
+
+  onAddMaintenanceHistory() {
+    const maintenanceHistoryArray = this.machineFleetForm.get('maintenanceHistory') as FormArray;
+    const newMaintenance = new FormGroup({
+      date: new FormControl(''),
+      details: new FormControl('')
+    });
+    maintenanceHistoryArray.push(newMaintenance);
+  }
+
   //####################################################################
 
 

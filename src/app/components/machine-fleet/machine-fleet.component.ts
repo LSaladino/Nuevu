@@ -18,7 +18,7 @@ export class MachineFleetComponent implements OnInit {
   public machineFleet: any[] = [];
   public submitted: boolean = false;
   performanceLog: any[] = []; // Define the performanceLog property as an array of strings
-  errors: any[] = []; // Define the errors property as an array of strings
+  // errors: any[] = []; // Define the errors property as an array of strings
   errorHistory: any[] = []; // Define the errorHistory property as an array of strings
   maintenanceHistory: any[] = []; // Define the maintenanceHistory property as an array of strings
   public array_ofMachines$: Observable<any[]> | undefined;
@@ -44,7 +44,7 @@ export class MachineFleetComponent implements OnInit {
 
       // errors: this.buildErrorsArray(),
       // errors: this.fb.array([]), // Initialize as an empty FormArray
-      errors: ['', Validators.required], // Initialize as an empty FormArray
+      errors: [''], // Initialize as an empty FormArray
 
       // errorHistory: this.buildErrorHistoryArray(),
       errorHistory: this.fb.array([]), // Initialize as an empty FormArray
@@ -97,9 +97,11 @@ export class MachineFleetComponent implements OnInit {
       this.machineFleetForm.patchValue({
         id: GUID
       });
-      if (this.machineFleetForm.valid) {
-        this.onPostMachine();
-      }
+      // if (this.machineFleetForm.valid) {
+      //   this.onPostMachine();
+      // }
+      //only testing
+      this.onPostMachine();
     }
 
   }
@@ -162,9 +164,7 @@ export class MachineFleetComponent implements OnInit {
       // Use datePipe to format the timestamp
       this.fb.group({
         timestamp: [
-          this.datePipe.transform(log.timestamp, 'yyyy-MM-ddTHH:mm', 'en'), // Format the date
-          Validators.required
-        ],
+          this.datePipe.transform(log.timestamp, 'yyyy-MM-ddTHH:mm', 'en'), Validators.required],
         performance: [log.performance, Validators.required]
       })
     );
@@ -179,17 +179,17 @@ export class MachineFleetComponent implements OnInit {
 
     this.setFormArray('errorHistory', machine.errorHistory, (error) =>
       this.fb.group({
-        timestamp: [this.datePipe.transform(error.timestamp, 'yyyy-MM-ddTHH:mm', 'en'), Validators.required],
-        errorCode: [error.errorCode, Validators.required],
-        message: [error.message, Validators.required],
-        resolved: [error.resolved, Validators.required]
+        timestamp: [this.datePipe.transform(error.timestamp, 'yyyy-MM-ddTHH:mm', 'en')],
+        errorCode: [error.errorCode],
+        message: [error.message],
+        resolved: [error.resolved]
       })
     );
 
     this.setFormArray('maintenanceHistory', machine.maintenanceHistory, (history) =>
       this.fb.group({
-        date: [this.datePipe.transform(history.date, 'yyyy-MM-ddTHH:mm', 'en'), Validators.required],
-        details: [history.details, Validators.required]
+        date: [this.datePipe.transform(history.date, 'yyyy-MM-ddTHH:mm', 'en')],
+        details: [history.details]
       })
     );
   }
@@ -255,26 +255,29 @@ export class MachineFleetComponent implements OnInit {
 
   onPostMachine() {
     if (this.machineFleetForm.valid) {
-      const formData = JSON.stringify(this.machineFleetForm.value);
+      const formData = JSON.parse(JSON.stringify(this.machineFleetForm.value));
   
       // Define HTTP headers
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          // 'Autorization':'Bearer ' + localStorage.getItem('token') // Replace with your actual token
-          'Autorization':'Bearer ' + 'AADDFFKKKLLLL'
-        })
-      };
+      // const httpOptions = {
+      //   headers: new HttpHeaders({
+      //     'Content-Type': 'application/json',
+      //     // 'Autorization':'Bearer ' + localStorage.getItem('token') // Replace with your actual token
+      //     'Autorization':'Bearer ' + 'AADDFFKKKLLLL'
+      //   })
+      // };
   
       // Make the POST request with headers
-      this.serviceMachineFleet.createMachine(formData, httpOptions).subscribe(
-        (response) => {
+      // this.serviceMachineFleet.createMachine(formData, httpOptions).subscribe(
+      console.log(formData);
+      this.serviceMachineFleet.createNewMachine(formData).subscribe({
+        next: (response) => {
           console.log(response);
           this.toastr.success('Machine created successfully');
           this.getAllMachines();
           this.machineFleetForm.reset();
+          this.oSelectedMachine = false;
         },
-        (error) => {
+        error: (error) => {
           console.error(error);
           if (error.status === 0) {
             this.toastr.error('CORS error: Unable to connect to the API');
@@ -282,7 +285,8 @@ export class MachineFleetComponent implements OnInit {
             this.toastr.error('Error creating machine');
           }
         }
-      );
+      });
+  
     } else {
       console.log(this.machineFleetForm);
       this.toastr.error('Please fill all required fields');

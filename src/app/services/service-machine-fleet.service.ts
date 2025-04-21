@@ -28,8 +28,12 @@ export class ServiceMachineFleetService {
   //   return this.http.post<any>(`${this.UrlPrincipal}`, machine);
   // }
 
-  createMachine(machine: any, HttpHeaders: any): Observable<any> {
-    return this.http.post<any>(this.UrlPrincipal, machine, { headers: HttpHeaders });
+  // createMachine(machine: any, HttpHeaders: any): Observable<any> {
+  //   return this.http.post<any>(this.UrlPrincipal, machine, { headers: HttpHeaders });
+  // }
+
+  createNewMachine(machine: any): Observable<any> {
+    return this.http.post(`${this.UrlPrincipal}/`, machine);
   }
 
 

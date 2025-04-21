@@ -5,10 +5,10 @@
     <span>Fleet Machine Management (FMM)</span>
     <span class="align-midle"></span>
 
-    <button mat-button [matMenuTriggerFor]="RegisterLevel1">Maintenance</button>
+    <button mat-button [matMenuTriggerFor]="RegisterLevel1">Machines</button>
     <mat-menu #RegisterLevel1="matMenu">
-        <button mat-menu-item routerLink="machine-fleet">Machines</button>
-        <button mat-menu-item routerLink="nothing">nothing</button>
+        <button mat-menu-item routerLink="machine-fleet">View Machine</button>
+        <button mat-menu-item routerLink="machine-create">New Machine</button>
         <button mat-menu-item routerLink="nothing">nothing</button>
         <button mat-menu-item [matMenuTriggerFor]="Infra">Infraestrutura</button>
     </mat-menu>

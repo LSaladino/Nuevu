@@ -97,11 +97,9 @@ export class MachineFleetComponent implements OnInit {
       this.machineFleetForm.patchValue({
         id: GUID
       });
-      // if (this.machineFleetForm.valid) {
-      //   this.onPostMachine();
-      // }
-      //only testing
-      this.onPostMachine();
+      if (this.machineFleetForm.valid) {
+        this.onPostMachine();
+      }
     }
 
   }

@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DatePipe } from '@angular/common';
+import { MachineCreateComponent } from './components/machine-create/machine-create.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { DatePipe } from '@angular/common';
     AppComponent,
     MachineFleetComponent,
     HomeComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    MachineCreateComponent
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,7 @@ body {
     width: 100vw;
     min-height: 100vh;
     display: flex;
-    /* align-items: center; */
+    align-items: center;
     justify-content: center;
 }
 
@@ -45,28 +45,4 @@ div.single-input .input {
     font-size: 16px;
 }
 
-/* div.single-input .input:focus,
-div.single-input .input:valid  {
-    border-bottom: 2px solid rgb(100, 155, 197);
-} */
-
-/* div.single.input .input:focus ~ label{
-    font-size: 12px;
-    color: rgb(100, 155, 197);
-    transform: translateY(-20px);
-    font-weight: 600;
-} */
-
-/* div.single-input.label-above label {
-    position: static;
-    font-size: 12px;
-    color: rgb(100, 155, 197);
-    margin-bottom: 5px;
-    transform: none;
-    transition: none;
-}
-
-div.single-input.label-above .input {
-    margin-top: 5px;
-} */
 

@@ -1,6 +1,200 @@
 <section class="container" [ngClass]="formStatus">
-<header>Registration Form</header>
-<form class="form">
+    <header>Registration Form</header>
+    <form class="form" [formGroup]="machineFleetCreateForm" (ngSubmit)="onSubmit()">
 
-</form>
+        <div style="display: flex;">
+
+            <!-- Name -->
+            <div class="col-sm-6">
+                <div class="single-input label-above">
+                    <label for="name">Name</label>
+                    <input id="name" formControlName="name" type="text" class="input" />
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div class="col-sm-6">
+                <div class="single-input label-above">
+                    <label for="status" style="margin-left: 6%;">Status</label>
+                    <input id="status" formControlName="status" type="number" class="input" style="margin-left: 6%;" />
+                </div>
+            </div>
+
+        </div>
+
+        <div style="display: flex;">
+
+            <!-- Performance -->
+            <div class="single-input label-above">
+                <label for="performance">Performance</label>
+                <input id="performance" formControlName="performance" type="number" class="input" />
+            </div>
+
+            <!-- Produced Parts -->
+            <div class="single-input label-above">
+                <label for="producedParts" style="margin-left: 6%;">Produced Parts</label>
+                <input id="producedParts" formControlName="producedParts" type="number" class="input"
+                    style="margin-left: 6%;" />
+            </div>
+
+        </div>
+
+        <!-- Production -->
+        <fieldset formGroupName="production" class="border rounded-3 p-4">
+            <legend class="float-none w-auto px-3">Production</legend>
+
+            <div style="display: flex;">
+                <div class="single-input label-above">
+                    <label for="currentProduct">Current Product</label>
+                    <input id="currentProduct" formControlName="currentProduct" type="text" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="partsInBatch" style="margin-left: 6%;">Parts in Batch</label>
+                    <input id="partsInBatch" formControlName="partsInBatch" type="number" class="input"
+                        style="margin-left: 6%;" />
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="single-input label-above">
+                    <label for="partsCompleted">Parts Completed</label>
+                    <input id="partsCompleted" formControlName="partsCompleted" type="number" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="batchStartTime" style="margin-left: 6%;">Batch Start Time</label>
+                    <input id="batchStartTime" formControlName="batchStartTime" type="datetime-local" class="input"
+                        style="margin-left: 6%;" />
+                </div>
+            </div>
+        </fieldset>
+
+
+        <!-- Details -->
+        <fieldset formGroupName="details" class="border rounded-3 p-4">
+            <legend class="float-none w-auto px-3">Details</legend>
+            <div style="display: flex;">
+                <div class="single-input label-above">
+                    <label for="manufacturer">Manufacturer</label>
+                    <input id="manufacturer" formControlName="manufacturer" type="text" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="modelNumber" style="margin-left: 6%;">Model Number</label>
+                    <input id="modelNumber" formControlName="modelNumber" type="text" class="input"
+                    style="margin-left: 6%;" />
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="single-input label-above">
+                    <label for="lastMaintenance">Last Maintenance</label>
+                    <input id="lastMaintenance" formControlName="lastMaintenance" type="date" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="location" style="margin-left: 6%;">Location</label>
+                    <input id="location" formControlName="location" type="text" class="input"
+                    style="margin-left: 6%;" />
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Live Sensors -->
+        <fieldset formGroupName="liveSensors" class="border rounded-3 p-3">
+            <legend class="float-none w-auto px-3">Live Sensors</legend>
+            <div style="display: flex;">
+                <div class="single-input label-above">
+                    <label for="temperatureC">Temperature (°C)</label>
+                    <input id="temperatureC" formControlName="temperatureC" type="number" class="input" style="width: 90px;" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="vibrationLevel">Vibration Level</label>
+                    <input id="vibrationLevel" formControlName="vibrationLevel" type="number" class="input" style="width: 90px;" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="powerConsumptionKw">Power Consumption (kW)</label>
+                    <input id="powerConsumptionKw" formControlName="powerConsumptionKw" type="number" class="input" style="width: 90px;" />
+                </div>
+            </div>
+            
+        </fieldset>
+
+        <!-- Current Shift -->
+        <fieldset formGroupName="currentShift" class="border rounded-3 p-4">
+            <legend class="float-none w-auto px-3">Current Shift</legend>
+            <div style="display: flex;">
+                <div class="single-input label-above">
+                    <label for="operatorName">Operator Name</label>
+                    <input id="operatorName" formControlName="operatorName" type="text" class="input" />
+                </div>
+                <div class="single-input label-above">
+                    <label for="shift" style="margin-left: 6%;" >Shift</label>
+                    <input id="shift" formControlName="shift" type="text" class="input"
+                    style="margin-left: 6%;"  />
+                </div>
+            </div>
+            
+        </fieldset>
+
+        <!-- Performance Log -->
+        <fieldset class="border rounded-3 p-3">
+            <legend class="float-none w-auto px-3">Performance Log</legend>
+            <div formArrayName="performanceLog">
+                <div *ngFor="let log of machineFleetCreateForm.get('performanceLog')['controls']; let i = index"
+                    [formGroupName]="i" class="single-input label-above">
+                    <label for="timestamp-{{ i }}">Timestamp</label>
+                    <input id="timestamp-{{ i }}" formControlName="timestamp" type="datetime-local" class="input" />
+                    <label for="performance-{{ i }}">Performance</label>
+                    <input id="performance-{{ i }}" formControlName="performance" type="number" class="input" />
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Errors -->
+        <div class="single-input label-above">
+            <label for="errors">Errors</label>
+            <input id="errors" formControlName="errors" type="text" class="input" />
+        </div>
+
+        <!-- Error History -->
+        <fieldset class="border rounded-3 p-3">
+            <legend class="float-none w-auto px-3">Error History</legend>
+            <div formArrayName="errorHistory">
+                <div *ngFor="let error of machineFleetCreateForm.get('errorHistory')['controls']; let i = index"
+                    [formGroupName]="i" class="single-input label-above">
+                    <label for="timestamp-{{ i }}">Timestamp</label>
+                    <input id="timestamp-{{ i }}" formControlName="timestamp" type="datetime-local" class="input" />
+                    <label for="errorCode-{{ i }}">Error Code</label>
+                    <input id="errorCode-{{ i }}" formControlName="errorCode" type="text" class="input" />
+                    <label for="errorMessage-{{ i }}">Error Message</label>
+                    <input id="errorMessage-{{ i }}" formControlName="message" type="text" class="input" />
+                    <label for="resolved-{{ i }}">Resolved</label>
+                    <input id="resolved-{{ i }}" formControlName="resolved" type="checkbox" class="input" />
+                </div>
+            </div>
+        </fieldset>
+
+
+        <!-- Maintenance History -->
+        <fieldset class="border rounded-3 p-3">
+            <legend class="float-none w-auto px-3">Maintenance History</legend>
+            <div formArrayName="maintenanceHistory">
+                <div *ngFor="let history of machineFleetCreateForm.get('maintenanceHistory')['controls']; let i = index"
+                    [formGroupName]="i" class="single-input label-above">
+                    <label for="date-{{ i }}">Date</label>
+                    <input id="date-{{ i }}" formControlName="date" type="date" class="input" />
+                    <label for="details-{{ i }}">Details</label>
+                    <input id="details-{{ i }}" formControlName="details" type="text" class="input" />
+                </div>
+            </div>
+        </fieldset>
+
+        <div style="display: flex;">
+            <div style="margin-right: 6%;">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div style="margin-right: 6%;">
+                <button type="button" class="btn btn-danger" (click)="onCloseForm()">Close</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-warning" (click)="onResetForm()">Clear</button>
+            </div>
+        </div>
+    </form>
 </section>

@@ -4,9 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-3" *ngIf="oSelectedMachine">
-            <!-- <div [ngClass]="{'col-sm-9':oSelectedMachine, 'col-sm-12':!oSelectedMachine}"> -->
             <form [formGroup]="machineFleetForm" (ngSubmit)="onSubmit()">
-
 
                 <!-- Name -->
                 <div class="single-input label-above">
@@ -36,23 +34,28 @@
                 <!-- Production -->
                 <fieldset formGroupName="production" class="border rounded-3 p-3">
                     <legend class="float-none w-auto px-3">Production</legend>
+
                     <div class="single-input label-above">
                         <label for="currentProduct">Current Product</label>
                         <input id="currentProduct" formControlName="currentProduct" type="text" class="input" />
                     </div>
+
                     <div class="single-input label-above">
                         <label for="partsInBatch">Parts in Batch</label>
                         <input id="partsInBatch" formControlName="partsInBatch" type="number" class="input" />
                     </div>
+
                     <div class="single-input label-above">
                         <label for="partsCompleted">Parts Completed</label>
                         <input id="partsCompleted" formControlName="partsCompleted" type="number" class="input" />
                     </div>
+
                     <div class="single-input label-above">
                         <label for="batchStartTime">Batch Start Time</label>
                         <input id="batchStartTime" formControlName="batchStartTime" type="datetime-local"
                             class="input" />
                     </div>
+                    
                 </fieldset>
 
                 <!-- Details -->

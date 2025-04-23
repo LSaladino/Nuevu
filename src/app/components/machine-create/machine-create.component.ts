@@ -1,5 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Data } from '@angular/router';
+import { timestamp } from 'rxjs';
 
 
 
@@ -14,14 +17,20 @@ export class MachineCreateComponent implements OnInit {
 
   machineFleetCreateForm: FormGroup;
 
-  ngOnInit()  {
+  constructor(private fb: FormBuilder,
+    private datePipe: DatePipe
+  ) { }
+
+  ngOnInit() {
     this.machineFleetCreateForm = new FormGroup({
       id: new FormControl(null, Validators.required),
       name: new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9 ]*$/)]),
       status: new FormControl(null, Validators.required),
       performance: new FormControl(null, Validators.required),
 
-      performanceLog: new FormArray([]), //###############################
+      performanceLog: new FormArray([
+       
+      ]), //###############################
 
       errors: new FormControl(['']),
 
@@ -54,6 +63,7 @@ export class MachineCreateComponent implements OnInit {
       })
     });
 
+    
     // this.machineFleetCreateForm.valueChanges.subscribe((value) => {
     //   this.formData = value;
     //   console.log('ValueChanges ->', this.formData);
@@ -76,20 +86,40 @@ export class MachineCreateComponent implements OnInit {
 
   }
 
-  onCloseForm() {}
+  onCloseForm() { }
 
   onResetForm() {
     this.machineFleetCreateForm.reset();
     console.log('Form Reset');
   }
 
+  onDeletePerformanceLog(index: number) {
+    const performanceLogs = <FormArray>this.machineFleetCreateForm.get('performanceLog');
+    performanceLogs.removeAt(index);
+  }
+
+  // onAddPerformanceLog() {
+  //   const performanceLogs = new FormGroup({
+  //     timestamp: new FormControl(null),
+  //     performance: new FormControl(null)
+  //   });
+    
+  //   (<FormArray>this.machineFleetCreateForm.get('performanceLog')).push(performanceLogs);
+  // }
 
 
+  onAddPerformanceLog(): void {
+    // Create a new FormGroup dynamically with 'timestamp' and 'performance' fields
+    const performanceLog: FormGroup = this.fb.group({
+      timestamp: [this.datePipe.transform(Date(), 'yyyy-MM-ddTHH:mm', 'en')], // Default to current timestamp
+      performance: [''] // Default to an empty string
+    });
 
+    // Add the new FormGroup to the FormArray
+    // this.machineFleetCreateForm.push(performanceLog);
+    (<FormArray>this.machineFleetCreateForm.get('performanceLog')).push(performanceLog);
 
-
-
-
+  }
 
 
 

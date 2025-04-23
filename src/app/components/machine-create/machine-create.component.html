@@ -136,14 +136,21 @@
         <fieldset class="border rounded-3 p-3">
             <legend class="float-none w-auto px-3">Performance Log</legend>
             <div formArrayName="performanceLog">
-                <div *ngFor="let log of machineFleetCreateForm.get('performanceLog')['controls']; let i = index"
-                    [formGroupName]="i" class="single-input label-above">
-                    <label for="timestamp-{{ i }}">Timestamp</label>
-                    <input id="timestamp-{{ i }}" formControlName="timestamp" type="datetime-local" class="input" />
-                    <label for="performance-{{ i }}">Performance</label>
-                    <input id="performance-{{ i }}" formControlName="performance" type="number" class="input" />
+                <div *ngFor="let log of machineFleetCreateForm.get('performanceLog')['controls']; let i = index" [formGroupName]="i">
+                    <label for="timestamp-{{ i }}">Timestamp:</label>
+                    <input type="datetime-local" placeholder="Typing Timestamp" formControlName="timestamp" class="single-input label-above">
+                    <label for="performance-{{ i }}" style="padding-left: 3%;">Performance:</label>
+                    <input type="number"  placeholder="Typing performance" formControlName="performance" class="single-input label-above">
+                    <button type="button" class="btn btn-danger" (click)="onDeletePerformanceLog(i)">
+                        Delete
+                      </button>
                 </div>
             </div>
+
+            <button type="button" class="btn btn-success" (click)="onAddPerformanceLog()">
+                Addition
+              </button>
+
         </fieldset>
 
         <!-- Errors -->

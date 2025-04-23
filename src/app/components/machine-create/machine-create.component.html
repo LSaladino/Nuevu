@@ -79,7 +79,7 @@
                 <div class="single-input label-above">
                     <label for="modelNumber" style="margin-left: 6%;">Model Number</label>
                     <input id="modelNumber" formControlName="modelNumber" type="text" class="input"
-                    style="margin-left: 6%;" />
+                        style="margin-left: 6%;" />
                 </div>
             </div>
             <div style="display: flex;">
@@ -90,7 +90,7 @@
                 <div class="single-input label-above">
                     <label for="location" style="margin-left: 6%;">Location</label>
                     <input id="location" formControlName="location" type="text" class="input"
-                    style="margin-left: 6%;" />
+                        style="margin-left: 6%;" />
                 </div>
             </div>
         </fieldset>
@@ -101,18 +101,21 @@
             <div style="display: flex;">
                 <div class="single-input label-above">
                     <label for="temperatureC">Temperature (°C)</label>
-                    <input id="temperatureC" formControlName="temperatureC" type="number" class="input" style="width: 90px;" />
+                    <input id="temperatureC" formControlName="temperatureC" type="number" class="input"
+                        style="width: 90px;" />
                 </div>
                 <div class="single-input label-above">
                     <label for="vibrationLevel">Vibration Level</label>
-                    <input id="vibrationLevel" formControlName="vibrationLevel" type="number" class="input" style="width: 90px;" />
+                    <input id="vibrationLevel" formControlName="vibrationLevel" type="number" class="input"
+                        style="width: 90px;" />
                 </div>
                 <div class="single-input label-above">
                     <label for="powerConsumptionKw">Power Consumption (kW)</label>
-                    <input id="powerConsumptionKw" formControlName="powerConsumptionKw" type="number" class="input" style="width: 90px;" />
+                    <input id="powerConsumptionKw" formControlName="powerConsumptionKw" type="number" class="input"
+                        style="width: 90px;" />
                 </div>
             </div>
-            
+
         </fieldset>
 
         <!-- Current Shift -->
@@ -124,32 +127,37 @@
                     <input id="operatorName" formControlName="operatorName" type="text" class="input" />
                 </div>
                 <div class="single-input label-above">
-                    <label for="shift" style="margin-left: 6%;" >Shift</label>
-                    <input id="shift" formControlName="shift" type="text" class="input"
-                    style="margin-left: 6%;"  />
+                    <label for="shift" style="margin-left: 6%;">Shift</label>
+                    <input id="shift" formControlName="shift" type="text" class="input" style="margin-left: 6%;" />
                 </div>
             </div>
-            
+
         </fieldset>
 
         <!-- Performance Log -->
-        <fieldset class="border rounded-3 p-3">
+        <fieldset class="border rounded-3 p-1">
             <legend class="float-none w-auto px-3">Performance Log</legend>
             <div formArrayName="performanceLog">
-                <div *ngFor="let log of machineFleetCreateForm.get('performanceLog')['controls']; let i = index" [formGroupName]="i">
+                <div *ngFor="let log of machineFleetCreateForm.get('performanceLog')['controls']; let i = index"
+                    [formGroupName]="i">
                     <label for="timestamp-{{ i }}">Timestamp:</label>
-                    <input type="datetime-local" placeholder="Typing Timestamp" formControlName="timestamp" class="single-input label-above">
+                    <input type="datetime" placeholder="Typing Timestamp" formControlName="timestamp"
+                        class="single-input label-above">
                     <label for="performance-{{ i }}" style="padding-left: 3%;">Performance:</label>
-                    <input type="number"  placeholder="Typing performance" formControlName="performance" class="single-input label-above">
-                    <button type="button" class="btn btn-danger" (click)="onDeletePerformanceLog(i)">
-                        Delete
-                      </button>
+                    <input type="number" placeholder="Typing performance" formControlName="performance"
+                        class="single-input label-above">
+                    <button type="button" class="btn btn-danger" (click)="onDeletePerformanceLog(i)" style="margin: 5px;">
+                        -
+                    </button>
+
                 </div>
             </div>
+            <div>
+                <button type="button" class="btn btn-success" (click)="onAddPerformanceLog()" style="margin-top: 30px;">
+                    +
+                </button>
+            </div>
 
-            <button type="button" class="btn btn-success" (click)="onAddPerformanceLog()">
-                Addition
-              </button>
 
         </fieldset>
 

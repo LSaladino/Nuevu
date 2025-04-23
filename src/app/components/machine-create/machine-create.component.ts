@@ -1,10 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Data } from '@angular/router';
-import { timestamp } from 'rxjs';
-
-
 
 @Component({
   selector: 'app-machine-create',
@@ -111,7 +107,7 @@ export class MachineCreateComponent implements OnInit {
   onAddPerformanceLog(): void {
     // Create a new FormGroup dynamically with 'timestamp' and 'performance' fields
     const performanceLog: FormGroup = this.fb.group({
-      timestamp: [this.datePipe.transform(Date(), 'yyyy-MM-ddTHH:mm', 'en')], // Default to current timestamp
+      timestamp: [this.datePipe.transform(Date(), 'dd/MM/yyyy HH:mm:ss', 'pt')], // Default to current timestamp
       performance: [''] // Default to an empty string
     });
 

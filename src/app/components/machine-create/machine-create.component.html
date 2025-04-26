@@ -141,12 +141,13 @@
                 <div *ngFor="let log of machineFleetCreateForm.get('performanceLog')['controls']; let i = index"
                     [formGroupName]="i">
                     <label for="timestamp-{{ i }}">Timestamp:</label>
-                    <input type="datetime" placeholder="Typing Timestamp" formControlName="timestamp"
+                    <input type="datetime-local" placeholder="Typing Timestamp" formControlName="timestamp"
                         class="single-input label-above">
                     <label for="performance-{{ i }}" style="padding-left: 3%;">Performance:</label>
                     <input type="number" placeholder="Typing performance" formControlName="performance"
                         class="single-input label-above">
-                    <button type="button" class="btn btn-danger" (click)="onDeletePerformanceLog(i)" style="margin: 5px;">
+                    <button type="button" class="btn btn-danger" (click)="onDeletePerformanceLog(i)"
+                        style="margin: 5px;">
                         -
                     </button>
 
@@ -157,8 +158,6 @@
                     +
                 </button>
             </div>
-
-
         </fieldset>
 
         <!-- Errors -->
@@ -168,20 +167,40 @@
         </div>
 
         <!-- Error History -->
-        <fieldset class="border rounded-3 p-3">
+        <fieldset class="border rounded-3 p-1">
             <legend class="float-none w-auto px-3">Error History</legend>
             <div formArrayName="errorHistory">
                 <div *ngFor="let error of machineFleetCreateForm.get('errorHistory')['controls']; let i = index"
-                    [formGroupName]="i" class="single-input label-above">
-                    <label for="timestamp-{{ i }}">Timestamp</label>
-                    <input id="timestamp-{{ i }}" formControlName="timestamp" type="datetime-local" class="input" />
-                    <label for="errorCode-{{ i }}">Error Code</label>
-                    <input id="errorCode-{{ i }}" formControlName="errorCode" type="text" class="input" />
-                    <label for="errorMessage-{{ i }}">Error Message</label>
-                    <input id="errorMessage-{{ i }}" formControlName="message" type="text" class="input" />
-                    <label for="resolved-{{ i }}">Resolved</label>
-                    <input id="resolved-{{ i }}" formControlName="resolved" type="checkbox" class="input" />
+                    [formGroupName]="i" >
+                    <div style="display: inline-flex;">
+                        <div class="single-input label-above">
+                            <label for="Timestamp">Timestamp</label>
+                            <input id="timestamp" formControlName="timestamp" type="date" class="input"
+                             style="width: 170px;" />
+                        </div>
+                        <div class="single-input label-above">
+                            <label for="errorCode" >Error Code</label>
+                            <input id="errorCode" formControlName="errorCode" type="text" class="input"
+                             style="width: 150px;"    />
+                        </div>
+
+                        <div class="single-input label-above">
+                            <label for="errorMessage-{{ i }}" >Error Message</label>
+                            <input id="errorMessage-{{ i }}" formControlName="message" type="text" class="input"
+                                style="width: 90px;" />
+                            <label for="resolved-{{ i }}" >Resolved</label>
+                            <input id="resolved-{{ i }}" formControlName="resolved" type="checkbox" class="input"
+                                style="width: 90px;" />
+                        </div>
+
+                    </div>
+                    <button class="btn btn-danger" (click)="onDeleteErrorHistory(i)">-</button>
                 </div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-success" (click)="onAddErrorHistory()" style="margin-top: 30px;">
+                    +
+                </button>
             </div>
         </fieldset>
 

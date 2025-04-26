@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { ServiceMachineFleetService } from 'src/app/services/service-machine-fleet.service';
 
 @Component({
   selector: 'app-machine-create',
@@ -14,7 +16,9 @@ export class MachineCreateComponent implements OnInit {
   machineFleetCreateForm: FormGroup;
 
   constructor(private fb: FormBuilder,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private toastr: ToastrService,
+    private serviceMachine: ServiceMachineFleetService
   ) { }
 
   ngOnInit() {
@@ -25,7 +29,7 @@ export class MachineCreateComponent implements OnInit {
       performance: new FormControl(null, Validators.required),
 
       performanceLog: new FormArray([
-       
+
       ]), //###############################
 
       errors: new FormControl(['']),
@@ -59,7 +63,7 @@ export class MachineCreateComponent implements OnInit {
       })
     });
 
-    
+
     // this.machineFleetCreateForm.valueChanges.subscribe((value) => {
     //   this.formData = value;
     //   console.log('ValueChanges ->', this.formData);
@@ -73,10 +77,16 @@ export class MachineCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Form Submitted', this.machineFleetCreateForm.value);
+    let GUID = this.generateGUID();
+    this.machineFleetCreateForm.patchValue({
+      id: GUID
+    });
+    console.log(this.machineFleetCreateForm.value);
+
     if (this.machineFleetCreateForm.valid) {
-      console.log('Form Submitted', this.machineFleetCreateForm.value);
-    } else {
+      this.onPostMachine();
+    }
+    else {
       console.log('Form is invalid');
     }
 
@@ -99,7 +109,7 @@ export class MachineCreateComponent implements OnInit {
   //     timestamp: new FormControl(null),
   //     performance: new FormControl(null)
   //   });
-    
+
   //   (<FormArray>this.machineFleetCreateForm.get('performanceLog')).push(performanceLogs);
   // }
 
@@ -116,6 +126,87 @@ export class MachineCreateComponent implements OnInit {
     (<FormArray>this.machineFleetCreateForm.get('performanceLog')).push(performanceLog);
 
   }
+
+  onAddErrorHistory(): void {
+
+    const errorHistory = new FormGroup({
+      timestamp: new FormControl(this.datePipe.transform(Date(), 'dd/MM/yyyy HH:mm:ss', 'pt')),
+      errorCode: new FormControl(null),
+      message: new FormControl(null),
+      resolved: new FormControl(false)
+    });
+
+    (<FormArray>this.machineFleetCreateForm.get('errorHistory')).push(errorHistory);
+
+
+    // another way to do it
+    // const errorHistory = this.machineFleetCreateForm.get('errorHistory') as FormArray;
+    // const error = new FormGroup({
+    //   timestamp: new FormControl(this.datePipe.transform(Date(), 'dd/MM/yyyy HH:mm:ss', 'pt')),
+    //   errorCode: new FormControl(null),
+    //   message: new FormControl(null),
+    //   resolved: new FormControl(false)
+    // });
+    // errorHistory.push(error);
+
+  }
+
+  onDeleteErrorHistory(index: number) {
+    const errorHistory = <FormArray>this.machineFleetCreateForm.get('errorHistory');
+    errorHistory.removeAt(index);
+  }
+
+
+  onPostMachine() {
+    if (this.machineFleetCreateForm.valid) {
+      const formData = JSON.parse(JSON.stringify(this.machineFleetCreateForm.value));
+
+      // Define HTTP headers
+      // const httpOptions = {
+      //   headers: new HttpHeaders({
+      //     'Content-Type': 'application/json',
+      //     // 'Autorization':'Bearer ' + localStorage.getItem('token') // Replace with your actual token
+      //     'Autorization':'Bearer ' + 'AADDFFKKKLLLL'
+      //   })
+      // };
+
+      // Make the POST request with headers
+      // this.serviceMachineFleet.createMachine(formData, httpOptions).subscribe(
+      console.log(formData);
+      this.serviceMachine.createNewMachine(formData).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.toastr.success('Machine created successfully');
+        },
+        error: (error) => {
+          console.error(error);
+          if (error.status === 0) {
+            this.toastr.error('CORS error: Unable to connect to the API');
+          } else {
+            this.toastr.error('Error creating machine');
+          }
+        }
+      });
+
+    } else {
+      console.log(this.machineFleetCreateForm);
+      this.toastr.error('Please fill all required fields');
+    }
+
+  }
+
+  private generateGUID(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (char) => {
+      const random = Math.random() * 16 | 0;
+      const value = char === 'x' ? random : (random & 0x3 | 0x8);
+      return value.toString(16);
+    });
+  }
+
+
+
+
+
 
 
 

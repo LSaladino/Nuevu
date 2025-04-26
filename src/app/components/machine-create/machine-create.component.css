@@ -22,3 +22,14 @@ legend {
   font-weight: 600;
   color: rgb(100, 155, 197);
 }
+
+
+
+/* .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 900px;
+  height: 100vh;
+} */

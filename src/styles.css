@@ -12,6 +12,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: rgb(240, 240, 240);
+    color: rgb(50, 50, 50);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    /* text-align: center; */
+    padding: 0 20px;
+    /* overflow: hidden; */
+    position: relative;
+    z-index: 0;
+    transition: 0.5s ease-in-out;
+    /* background-image: url("https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fGJsdXUlMjB3aGl0ZXxlbnwwfHx8fDE2ODQ5NTY1NzM&ixlib=rb-4.0.3&q=80&w=1080"); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 form {

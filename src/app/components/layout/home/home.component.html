@@ -1,42 +1,45 @@
-<mat-toolbar color="primary" class="mat-elevation-z6">
-    <button mat-icon-button routerLink="/">
-        <mat-icon>home</mat-icon>
-    </button>
-    <span>Fleet Machine Management (FMM)</span>
-    <span class="align-midle"></span>
+<div>
+    <mat-toolbar color="primary" class="mat-elevation-z6">
+        <button mat-icon-button routerLink="/">
+            <mat-icon>home</mat-icon>
+        </button>
+        <span>Fleet Machine Management (FMM)</span>
+        <span class="align-midle"></span>
+    
+        <button mat-button [matMenuTriggerFor]="RegisterLevel1">Machines</button>
+        <mat-menu #RegisterLevel1="matMenu">
+            <button mat-menu-item routerLink="machine-fleet">View Machine</button>
+            <button mat-menu-item routerLink="machine-create">New Machine</button>
+            <button mat-menu-item routerLink="nothing">nothing</button>
+            <button mat-menu-item [matMenuTriggerFor]="Infra">Infraestrutura</button>
+        </mat-menu>
+    
+        <mat-menu #Infra="matMenu">
+            <button mat-menu-item routerLink="role">Settings</button>
+        </mat-menu>
+    
+        <button mat-button [matMenuTriggerFor]="tabela">Financial</button>
+        <mat-menu #tabela="matMenu">
+            <button mat-menu-item routerLink="nothing">nothing</button>
+            <button mat-menu-item routerLink="nothing">nothing</button>
+            <button mat-menu-item routerLink="nothing">nothing</button>
+        </mat-menu>
+    
+        <button mat-button>Reports</button>
+    
+        <span class="example-spacer"></span>
+        <button mat-button>About</button>
+        <button mat-button>Contact</button>
+    </mat-toolbar>
+    
+    <section>
+        <main class="container">
+            <router-outlet></router-outlet>
+        </main>
+    </section>
+    
+    <footer class="mt-2 p-2 text-center">
+        <a href="#">Home</a>
+    </footer>
+</div>
 
-    <button mat-button [matMenuTriggerFor]="RegisterLevel1">Machines</button>
-    <mat-menu #RegisterLevel1="matMenu">
-        <button mat-menu-item routerLink="machine-fleet">View Machine</button>
-        <button mat-menu-item routerLink="machine-create">New Machine</button>
-        <button mat-menu-item routerLink="nothing">nothing</button>
-        <button mat-menu-item [matMenuTriggerFor]="Infra">Infraestrutura</button>
-    </mat-menu>
-
-    <mat-menu #Infra="matMenu">
-        <button mat-menu-item routerLink="role">Settings</button>
-    </mat-menu>
-
-    <button mat-button [matMenuTriggerFor]="tabela">Financial</button>
-    <mat-menu #tabela="matMenu">
-        <button mat-menu-item routerLink="nothing">nothing</button>
-        <button mat-menu-item routerLink="nothing">nothing</button>
-        <button mat-menu-item routerLink="nothing">nothing</button>
-    </mat-menu>
-
-    <button mat-button>Reports</button>
-
-    <span class="example-spacer"></span>
-    <button mat-button>About</button>
-    <button mat-button>Contact</button>
-</mat-toolbar>
-
-<section>
-    <main class="container">
-        <router-outlet></router-outlet>
-    </main>
-</section>
-
-<footer class="mt-2 p-2 text-center">
-    <a href="#">Home</a>
-</footer>
